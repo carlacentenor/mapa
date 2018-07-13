@@ -1,6 +1,11 @@
 var input = document.getElementById('address');
 var markers = [];
 var map;
+let typeHome = 'Casa';
+
+
+
+
 
 function initMap() {
 
@@ -71,14 +76,6 @@ function initMap() {
         var point = new google.maps.LatLng(respuesta.results[0].geometry.location.lat, respuesta.results[0].geometry.location.lng);
         addMarker(point);
 
-        //  marker = new google.maps.Marker({
-        //   position: point,
-        //   map: map,
-
-        // });
-        // markers.push(marker);
-        // marker.setMap(map);
-
 
         if (google.maps.geometry.poly.containsLocation(point, mapLimit)) {
           console.log('esta dentro de los limites');
@@ -101,7 +98,7 @@ function inputAddress() {
   let autocompleteorigin = new google.maps.places.Autocomplete(input);
 }
 
-//
+//Agregando marcadores al mapa
 function addMarker(location) {
   var marker = new google.maps.Marker({
     position: location,
@@ -109,17 +106,17 @@ function addMarker(location) {
   });
   markers.push(marker);
 }
-
+// enviando marcadores en el mapa
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
-
+// Funciones para limpiar marcadores
 function clearMarkers() {
   setMapOnAll(null);
 }
-
+// Muestra y borra marcodores
 function showMarkers() {
   setMapOnAll(map);
 }
@@ -127,4 +124,24 @@ function showMarkers() {
 function deleteMarkers() {
   clearMarkers();
   markers = [];
+}
+
+/**Valores de Input Radio Button */
+
+$('#radiotipo input').on('change', function() {
+  typeHome = $('input[name=tipo]:checked', '#radiotipo').val();
+if(typeHome == 'Departamento'){
+showNumDpto();
+}else{
+  $('#box-dpto-number').empty();
+}
+});
+
+function showNumDpto(){
+  let template = ` <div>
+                     <span>Número</span>
+                     <input type="text" id="num-dpto">
+                  </div>`;
+
+ $('#box-dpto-number').append(template);                 
 }
