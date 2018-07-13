@@ -10,31 +10,42 @@
 </head>
 
 <body>
-  <h3>Dirección</h3>
-  <div>
-    <input type="text" id="address">
-    <button id="search">Buscar</button>
-  </div>
+  <main>
+    <h3>Direccion</h3>
+    <div>
+      <input type="text" id="address">
+      <button id="search">Buscar</button>
+    </div>
 
-  <div class="map" id="map"></div>
-  <form id=radiotipo>
-    <input type="radio" name="tipo" value="Casa" checked>Casa
-    <input type="radio" name="tipo" value="Departamento">Departamento
-
-
-  </form>
-  <div id="box-dpto-number">
+    <div class="map" id="map"></div>
+    <form id=radiotipo>
+      <input type="radio" name="tipo" value="Casa" checked>Casa
+      <input type="radio" name="tipo" value="Departamento">Departamento
 
 
-  </div>
+    </form>
+    <div id="box-dpto-number">
+    </div>
 
-  <div>
-    <p>Detalles adiciones y/o referencias</p>
-    <input type="text" id="referencias">
-  </div>
-  <div>
-    <button>Enviar</button>
-  </div>
+    <div>
+      <p>Detalles adiciones y/o referencias</p>
+      <input type="text" id="referencias">
+    </div>
+    <div>
+      <form id="ubication-user">
+        <input id="inputMap" type="hidden" name="direccionusuario">
+        <input id="inputReferences" type="hidden" name="referencia">
+        <input id="inputNumDpto" type="hidden" name="numdpto">
+        <input id="inputType" type="hidden" name="typehome">
+        <input id="inputLimit" type="hidden" name="limitMap">
+        <input type="hidden" name="userId">
+        <input type="hidden" name="blockName">
+        <button type="submit" id="send">Enviar</button>
+      </form>
+
+    </div>
+  </main>
+
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7YnCgF_fr5JpSoRsZZ5C9_YvooKa62Jc&callback=initMap&libraries=places"></script>
   </script>

@@ -2,10 +2,18 @@ var input = document.getElementById('address');
 var markers = [];
 var map;
 let typeHome = 'Casa';
+// DOM selectore
+const  referencias = $('#referencias');
+const userAddres= $('#address');
+const sendInfo = $('#send');
+const inputMap = $('#inputMap');
+const inputReferences = $('#inputReferences');
+const inpuNumDpto = $('#inputNumDpto');
+const inputType =$('#inputType');
+const limit = $('#inputLimit');
 
-
-
-
+// Inicializando variables
+var validateLimit = false;
 
 function initMap() {
 
@@ -68,6 +76,7 @@ function initMap() {
 
   button.addEventListener('click', function () {
     var text = $('#address').val();
+    inputMap.val(userAddres.val());
     deleteMarkers()
     $.ajax({
       url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURI(text)},Peru&key=AIzaSyA7YnCgF_fr5JpSoRsZZ5C9_YvooKa62Jc`,
@@ -78,9 +87,15 @@ function initMap() {
 
 
         if (google.maps.geometry.poly.containsLocation(point, mapLimit)) {
+          validateLimit = true;
           console.log('esta dentro de los limites');
-        } else
-          console.log('No se encuentra dentro de los limites')
+          limit.val(validateLimit)
+        } else{
+          validateLimit = false;
+          console.log('No se encuentra dentro de los limites');
+          limit.val(validateLimit)
+        }
+          
 
       },
       error: function () {
@@ -132,16 +147,29 @@ $('#radiotipo input').on('change', function() {
   typeHome = $('input[name=tipo]:checked', '#radiotipo').val();
 if(typeHome == 'Departamento'){
 showNumDpto();
+
+inputType.val(typeHome);
 }else{
+  inputType.val(typeHome);
   $('#box-dpto-number').empty();
 }
 });
 
+// Función que muestra y oculta el input de num de dpto
 function showNumDpto(){
   let template = ` <div>
                      <span>Número</span>
-                     <input type="text" id="num-dpto">
+                     <input type="text" class="num-dpto">
                   </div>`;
 
  $('#box-dpto-number').append(template);                 
 }
+
+
+$('#referencias').on('keyup',function(){
+  inputReferences.val(referencias.val());
+});
+
+document.on('keyup','.num-dpto',function(){
+  console.log('dsds')
+});
