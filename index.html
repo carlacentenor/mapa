@@ -5,31 +5,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="main.css">
-  <title>Prueba Mapa</title>
+  <title>Dirección</title>
 </head>
 
 <body>
   <main>
-    <h3>Direccion</h3>
-    <div>
-      <input type="text" id="address">
-      <button id="search">Buscar</button>
+    <div class="text-center">
+      <img class="logo-papa" src="https://cdn.glitch.com/91e28cb2-d37c-4e4b-92be-c94d260d314c%2Flogo-small-no-text-papa-johns.png?1531868931842" alt="">
+    </div>
+    <div class="title-address">
+      <p class="mb-0">
+        <i class="fas fa-map-marker-alt pr-2"></i>DIRECCIÓN Y ZONA DE REPARTO</p>
     </div>
 
-    <div class="map" id="map"></div>
-    <form id=radiotipo>
-      <input type="radio" name="tipo" value="Casa" checked>Casa
-      <input type="radio" name="tipo" value="Departamento">Departamento
+    <div class="pl-3 pt-3 pr-1">
+      <input type="text" id="address" class=" width75 style-input">
+      <button id="search" class="search-address">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div class="container">
+      <div class="row p-3">
+        <div class="map col-12" id="map"></div>
+      </div>
+    </div>
 
 
+    <form id=radiotipo class="pl-3 text-center">
+      <input type="radio" name="tipo" value="Casa"  id="rb1" />
+      <label for="rb1">Casa</label>
+      <input type="radio" name="tipo" value="Departamento" id="rb2" />
+      <label for="rb2">Departamento</label>
     </form>
     <div id="box-dpto-number">
     </div>
 
-    <div>
-      <p>Detalles adiciones y/o referencias</p>
-      <input type="text" id="referencias">
+    <div class="p-3">
+      <textarea type="text" id="referencias" placeholder="Detalles y referencias" class="box-refer style-input"></textarea>
     </div>
     <div>
       <form id="ubication-user">
@@ -40,7 +57,7 @@
         <input id="inputLimit" type="hidden" name="limitMap">
         <input type="hidden" name="userId">
         <input type="hidden" name="blockName">
-        <button type="submit" id="send">Enviar</button>
+        <button type="submit" class="btn-send"  id="send">Enviar</button>
       </form>
 
     </div>

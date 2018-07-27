@@ -1,6 +1,7 @@
 var input = document.getElementById('address');
 var markers = [];
 var map;
+var mapOptions;
 let typeHome = 'Casa';
 // DOM selectore
 const  referencias = $('#referencias');
@@ -11,6 +12,10 @@ const inputReferences = $('#inputReferences');
 const inpuNumDpto = $('#inputNumDpto');
 const inputType =$('#inputType');
 const limit = $('#inputLimit');
+// Validación de input
+let validateInputAddress = false;
+let validateType = false;
+let validateReferences = false;
 
 // Inicializando variables
 var validateLimit = false;
@@ -18,7 +23,7 @@ var validateLimit = false;
 function initMap() {
 
   inputAddress();
-  var mapOptions = {
+   mapOptions = {
     zoom: 14,
     center: new google.maps.LatLng(-12.08451, -77.05127),
     mapTypeId: 'terrain'
@@ -88,10 +93,12 @@ function initMap() {
 
         if (google.maps.geometry.poly.containsLocation(point, mapLimit)) {
           validateLimit = true;
+          validateInputAddress = true;
           console.log('esta dentro de los limites');
           limit.val(validateLimit)
         } else{
           validateLimit = false;
+          validateInputAddress = true;
           console.log('No se encuentra dentro de los limites');
           limit.val(validateLimit)
         }
@@ -115,6 +122,13 @@ function inputAddress() {
 
 //Agregando marcadores al mapa
 function addMarker(location) {
+ mapOptions = {
+    zoom: 15,
+    center: location,
+    mapTypeId: 'terrain'
+  };
+  map = new google.maps.Map(document.getElementById('map'),
+    mapOptions);
   var marker = new google.maps.Marker({
     position: location,
     map: map
@@ -145,31 +159,71 @@ function deleteMarkers() {
 
 $('#radiotipo input').on('change', function() {
   typeHome = $('input[name=tipo]:checked', '#radiotipo').val();
+  
 if(typeHome == 'Departamento'){
 showNumDpto();
-
+validateType = true;
+activeButton();
 inputType.val(typeHome);
-}else{
+}
+else if(typeHome == 'Casa'){
   inputType.val(typeHome);
+  validateType = true;
+  
+  activeButton();
   $('#box-dpto-number').empty();
+}else{
+  validateType= false;
+  desactiveButton();
 }
 });
 
 // Función que muestra y oculta el input de num de dpto
 function showNumDpto(){
   let template = ` <div>
-                     <span>Número</span>
-                     <input type="text" class="num-dpto">
+                      <div class="row">
+                         <div class="col-6 offset-5">
+                            <span>Número</span>
+                            <input type="text" class="num-dpto style-input number-dpto" name="numdpto">
+                        </div>
+  
+                      </div>
+                    
                   </div>`;
 
  $('#box-dpto-number').append(template);                 
 }
 
 
+
 $('#referencias').on('keyup',function(){
-  inputReferences.val(referencias.val());
+  if( $('#referencias').val()){
+    validateReferences = true;
+    inputReferences.val(referencias.val());
+    activeButton();
+  }
+ else{
+   validateReferences = false;
+   desactiveButton();
+ }
 });
 
-document.on('keyup','.num-dpto',function(){
-  console.log('dsds')
+
+$(document).on('keyup','.num-dpto',function(){
+   inpuNumDpto.val($('.num-dpto').val());
 });
+
+function activeButton() {
+  if (validateInputAddress && validateReferences && validateType) {
+    sendInfo.attr('disabled', false);
+    sendInfo.removeClass('btn-desactive');
+
+  }
+}
+
+function desactiveButton() {
+  sendInfo.attr('disabled', 'disabled');
+  sendInfo.addClass('btn-desactive');
+} 
+
+desactiveButton();
