@@ -180,7 +180,7 @@ else if(typeHome == 'Casa'){
 
 // Función que muestra y oculta el input de num de dpto
 function showNumDpto(){
-  let template = ` <div>
+  let template = ` <div class="container">
                       <div class="row">
                          <div class="col-6 offset-5">
                             <span>Número</span>
