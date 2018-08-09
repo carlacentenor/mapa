@@ -22,7 +22,7 @@ var validateLimit = false;
 
 function initMap() {
 
-  inputAddress();
+ 
    mapOptions = {
     zoom: 14,
     center: new google.maps.LatLng(-12.08451, -77.05127),
@@ -31,7 +31,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
-
+    inputAddress();
   var mapLimit = new google.maps.Polygon({
     paths: [
       new google.maps.LatLng(-12.06518, -77.04526),
@@ -113,17 +113,68 @@ function initMap() {
 
   });
 
+ 
+
 }
 
 // Autocompletado input
 function inputAddress() {
-  let autocompleteorigin = new google.maps.places.Autocomplete(input);
+  var autocompleteorigin = new google.maps.places.Autocomplete(input);
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29),
+    icon: 'https://user-images.githubusercontent.com/32285482/43907999-74c95c46-9bbc-11e8-8545-3c324d913e9a.png'
+  });
+  autocompleteorigin.setFields(
+    ['address_components', 'geometry', 'icon', 'name']);
+  var infowindow = new google.maps.InfoWindow();
+  var infowindowContent = document.getElementById('infowindow-content');
+  infowindow.setContent(infowindowContent);
+  
+
+  autocompleteorigin.addListener('place_changed', function() {
+    var place = autocompleteorigin.getPlace();
+    if (!place.geometry) {
+      // User entered the name of a Place that was not suggested and
+      // pressed the Enter key, or the Place Details request failed.
+      window.alert("No hay detalles de este lugar: '" + place.name + "'");
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);  // Why 17? Because it looks good.
+    }
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+     
+      ].join(' ');
+    }
+    infowindowContent.children['place-icon'].src = place.icon;
+    infowindowContent.children['place-name'].textContent = place.name;
+  
+    infowindow.open(map, marker);
+  });
 }
+
+
+
+
+
 
 //Agregando marcadores al mapa
 function addMarker(location) {
  mapOptions = {
-    zoom: 15,
+    zoom: 17,
     center: location,
     mapTypeId: 'terrain'
   };
@@ -131,7 +182,8 @@ function addMarker(location) {
     mapOptions);
   var marker = new google.maps.Marker({
     position: location,
-    map: map
+    map: map,
+    icon: 'https://user-images.githubusercontent.com/32285482/43907999-74c95c46-9bbc-11e8-8545-3c324d913e9a.png'
   });
   markers.push(marker);
 }

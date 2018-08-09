@@ -8,6 +8,11 @@
   width: 100%;
 }
 
+.pac-container:after {
+  background-image: none !important;
+  height: 0px;
+}
+
 :root {
   --red: #F20030;
   --darkred: #BB141A;
@@ -15,6 +20,10 @@
   --darkgrey: #807673;
   --lightgrey: #A39D9B;
   --freshgrey: #6B514B;
+}
+
+.title {
+  font-weight: bold;
 }
 
 .style-input {
@@ -93,19 +102,18 @@ input[type="radio"]:checked+label::before {
   padding: 3px;
 }
 
-.number-dpto{
+.number-dpto {
   width: 50px
 }
 
-.box-dpto{
+.box-dpto {
   margin-left: 155px;
 }
 
-.btn-desactive{
+.btn-desactive {
   background-color: var(--lightgrey);
-
 }
 
-.logo-papa{
+.logo-papa {
   width: 128px;
 }
