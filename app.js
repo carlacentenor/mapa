@@ -4,13 +4,13 @@ var map;
 var mapOptions;
 let typeHome = 'Casa';
 // DOM selectore
-const  referencias = $('#referencias');
-const userAddres= $('#address');
+const referencias = $('#referencias');
+const userAddres = $('#address');
 const sendInfo = $('#send');
 const inputMap = $('#inputMap');
 const inputReferences = $('#inputReferences');
 const inpuNumDpto = $('#inputNumDpto');
-const inputType =$('#inputType');
+const inputType = $('#inputType');
 const limit = $('#inputLimit');
 // Validación de input
 let validateInputAddress = false;
@@ -22,8 +22,8 @@ var validateLimit = false;
 
 function initMap() {
 
- 
-   mapOptions = {
+
+  mapOptions = {
     zoom: 14,
     center: new google.maps.LatLng(-12.08451, -77.05127),
     mapTypeId: 'terrain'
@@ -31,7 +31,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
-    inputAddress();
+  inputAddress();
   var mapLimit = new google.maps.Polygon({
     paths: [
       new google.maps.LatLng(-12.06518, -77.04526),
@@ -96,13 +96,13 @@ function initMap() {
           validateInputAddress = true;
           console.log('esta dentro de los limites');
           limit.val(validateLimit)
-        } else{
+        } else {
           validateLimit = false;
           validateInputAddress = true;
           console.log('No se encuentra dentro de los limites');
           limit.val(validateLimit)
         }
-          
+
 
       },
       error: function () {
@@ -113,7 +113,7 @@ function initMap() {
 
   });
 
- 
+
 
 }
 
@@ -130,9 +130,9 @@ function inputAddress() {
   var infowindow = new google.maps.InfoWindow();
   var infowindowContent = document.getElementById('infowindow-content');
   infowindow.setContent(infowindowContent);
-  
 
-  autocompleteorigin.addListener('place_changed', function() {
+
+  autocompleteorigin.addListener('place_changed', function () {
     var place = autocompleteorigin.getPlace();
     if (!place.geometry) {
       // User entered the name of a Place that was not suggested and
@@ -146,7 +146,7 @@ function inputAddress() {
       map.fitBounds(place.geometry.viewport);
     } else {
       map.setCenter(place.geometry.location);
-      map.setZoom(17);  // Why 17? Because it looks good.
+      map.setZoom(17); // Why 17? Because it looks good.
     }
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
@@ -156,12 +156,12 @@ function inputAddress() {
       address = [
         (place.address_components[0] && place.address_components[0].short_name || ''),
         (place.address_components[1] && place.address_components[1].short_name || ''),
-     
+
       ].join(' ');
     }
     infowindowContent.children['place-icon'].src = place.icon;
     infowindowContent.children['place-name'].textContent = place.name;
-  
+
     infowindow.open(map, marker);
   });
 }
@@ -173,7 +173,7 @@ function inputAddress() {
 
 //Agregando marcadores al mapa
 function addMarker(location) {
- mapOptions = {
+  mapOptions = {
     zoom: 17,
     center: location,
     mapTypeId: 'terrain'
@@ -209,29 +209,28 @@ function deleteMarkers() {
 
 /**Valores de Input Radio Button */
 
-$('#radiotipo input').on('change', function() {
+$('#radiotipo input').on('change', function () {
   typeHome = $('input[name=tipo]:checked', '#radiotipo').val();
-  
-if(typeHome == 'Departamento'){
-showNumDpto();
-validateType = true;
-activeButton();
-inputType.val(typeHome);
-}
-else if(typeHome == 'Casa'){
-  inputType.val(typeHome);
-  validateType = true;
-  
-  activeButton();
-  $('#box-dpto-number').empty();
-}else{
-  validateType= false;
-  desactiveButton();
-}
+
+  if (typeHome == 'Departamento') {
+    showNumDpto();
+    validateType = true;
+    activeButton();
+    inputType.val(typeHome);
+  } else if (typeHome == 'Casa') {
+    inputType.val(typeHome);
+    validateType = true;
+
+    activeButton();
+    $('#box-dpto-number').empty();
+  } else {
+    validateType = false;
+    desactiveButton();
+  }
 });
 
 // Función que muestra y oculta el input de num de dpto
-function showNumDpto(){
+function showNumDpto() {
   let template = ` <div class="container">
                       <div class="row">
                          <div class="col-6 offset-5">
@@ -243,26 +242,25 @@ function showNumDpto(){
                     
                   </div>`;
 
- $('#box-dpto-number').append(template);                 
+  $('#box-dpto-number').append(template);
 }
 
 
 
-$('#referencias').on('keyup',function(){
-  if( $('#referencias').val()){
+$('#referencias').on('keyup', function () {
+  if ($('#referencias').val()) {
     validateReferences = true;
     inputReferences.val(referencias.val());
     activeButton();
+  } else {
+    validateReferences = false;
+    desactiveButton();
   }
- else{
-   validateReferences = false;
-   desactiveButton();
- }
 });
 
 
-$(document).on('keyup','.num-dpto',function(){
-   inpuNumDpto.val($('.num-dpto').val());
+$(document).on('keyup', '.num-dpto', function () {
+  inpuNumDpto.val($('.num-dpto').val());
 });
 
 function activeButton() {
@@ -276,6 +274,6 @@ function activeButton() {
 function desactiveButton() {
   sendInfo.attr('disabled', 'disabled');
   sendInfo.addClass('btn-desactive');
-} 
+}
 
 desactiveButton();
