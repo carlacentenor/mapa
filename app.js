@@ -3,6 +3,7 @@ var markers = [];
 var map;
 var mapOptions;
 let typeHome = 'Casa';
+const mapDraw = $('#map');
 // DOM selectore
 const referencias = $('#referencias');
 const userAddres = $('#address');
@@ -29,8 +30,7 @@ function initMap() {
     mapTypeId: 'terrain'
   };
 
-  map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
+ 
   inputAddress();
   var mapLimit = new google.maps.Polygon({
     paths: [
@@ -80,6 +80,9 @@ function initMap() {
   var button = document.getElementById('search');
 
   button.addEventListener('click', function () {
+    mapDraw.css('height', '35vh');
+    $('main').css('height','75vh');
+    $('footer').css('height','5vh');
     var text = $('#address').val();
     inputMap.val(userAddres.val());
     deleteMarkers()
@@ -89,7 +92,6 @@ function initMap() {
         // ubicacion a validar
         var point = new google.maps.LatLng(respuesta.results[0].geometry.location.lat, respuesta.results[0].geometry.location.lng);
         addMarker(point);
-
 
         if (google.maps.geometry.poly.containsLocation(point, mapLimit)) {
           validateLimit = true;
@@ -102,8 +104,6 @@ function initMap() {
           console.log('No se encuentra dentro de los limites');
           limit.val(validateLimit)
         }
-
-
       },
       error: function () {
         console.log("No se ha podido obtener la información");
@@ -132,38 +132,7 @@ function inputAddress() {
   infowindow.setContent(infowindowContent);
 
 
-  autocompleteorigin.addListener('place_changed', function () {
-    var place = autocompleteorigin.getPlace();
-    if (!place.geometry) {
-      // User entered the name of a Place that was not suggested and
-      // pressed the Enter key, or the Place Details request failed.
-      window.alert("No hay detalles de este lugar: '" + place.name + "'");
-      return;
-    }
 
-    // If the place has a geometry, then present it on a map.
-    if (place.geometry.viewport) {
-      map.fitBounds(place.geometry.viewport);
-    } else {
-      map.setCenter(place.geometry.location);
-      map.setZoom(17); // Why 17? Because it looks good.
-    }
-    marker.setPosition(place.geometry.location);
-    marker.setVisible(true);
-
-    var address = '';
-    if (place.address_components) {
-      address = [
-        (place.address_components[0] && place.address_components[0].short_name || ''),
-        (place.address_components[1] && place.address_components[1].short_name || ''),
-
-      ].join(' ');
-    }
-    infowindowContent.children['place-icon'].src = place.icon;
-    infowindowContent.children['place-name'].textContent = place.name;
-
-    infowindow.open(map, marker);
-  });
 }
 
 
@@ -174,7 +143,7 @@ function inputAddress() {
 //Agregando marcadores al mapa
 function addMarker(location) {
   mapOptions = {
-    zoom: 17,
+    zoom: 16,
     center: location,
     mapTypeId: 'terrain'
   };
@@ -213,6 +182,7 @@ $('#radiotipo input').on('change', function () {
   typeHome = $('input[name=tipo]:checked', '#radiotipo').val();
 
   if (typeHome == 'Departamento') {
+    $('main').css('height','80vh');
     showNumDpto();
     validateType = true;
     activeButton();
@@ -220,7 +190,7 @@ $('#radiotipo input').on('change', function () {
   } else if (typeHome == 'Casa') {
     inputType.val(typeHome);
     validateType = true;
-
+    $('main').css('height','75vh');
     activeButton();
     $('#box-dpto-number').empty();
   } else {

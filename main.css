@@ -4,8 +4,20 @@
 }
 
 .map {
-  height: 375px;
+  height: 0px;
   width: 100%;
+}
+
+header {
+  height: 23vh;
+}
+
+main {
+  height: 70vh;
+}
+
+footer {
+  height: 7vh;
 }
 
 .pac-container:after {
@@ -34,6 +46,7 @@
 
 .btn-send {
   width: 100%;
+  height: auto;
   border: none;
   background-color: var(--green);
   color: white;
@@ -98,7 +111,7 @@ input[type="radio"]:checked+label::before {
 }
 
 .width75 {
-  width: 85%;
+  width: 100%;
   padding: 3px;
 }
 
